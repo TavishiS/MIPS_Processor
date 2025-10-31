@@ -1,0 +1,33 @@
+# test_branch_conditions.asm
+#
+# Description:
+# This program tests R-type (sub, slt) and branch (beq) instructions.
+# It checks if two numbers are equal and branches.
+#
+# Expected Outcome:
+# 1. $t0 will be 7, $t1 will be 10.
+# 2. $t0 and $t1 are NOT equal, so the 'beq' should NOT branch.
+# 3. The program should execute the "fall-through" instruction, setting $s1 = 1.
+# 4. The 'slt' instruction will set $t3 = 1 (since 7 < 10).
+# 5. The 'sub' instruction will set $t4 = 3 (10 - 7).
+# 6. $s2 should remain 0 (or its initial value), as the branch to IF_EQUAL is not taken.
+
+.text
+    addi $t0, $zero, 7      # $t0 = 7
+    addi $t1, $zero, 10     # $t1 = 10
+
+    beq $t0, $t1, IF_EQUAL  # Branch to IF_EQUAL if $t0 == $t1
+
+    # Fall-through (not equal) case
+    addi $s1, $zero, 1      # Set $s1 = 1 (to indicate branch was not taken)
+    slt $t3, $t0, $t1       # $t3 = ($t0 < $t1) ? 1 : 0
+    sub $t4, $t1, $t0       # $t4 = $t1 - $t0
+    
+    # Unconditional jump to end (using beq $zero, $zero)
+    beq $zero, $zero, END
+    
+IF_EQUAL:
+    addi $s2, $zero, 2      # Set $s2 = 2 (to indicate branch was taken)
+
+END:
+    # End of program

@@ -12,8 +12,7 @@ void convertToHex(string fname)
         return;
     }
 
-    ofstream writeFile("memory_dump_hex", ios::out);
-
+    ofstream writeFile((fname+"_hex").c_str(), ios::out);
     if(!writeFile)
     {
         cerr<<"Error creating hex file"<<endl;
@@ -21,7 +20,7 @@ void convertToHex(string fname)
     }
 
     string line;
-
+    writeFile<<"v2.0 raw"<<endl;
     while(getline(readFile, line))
     {
         writeFile<<line<<endl;
@@ -41,6 +40,6 @@ int main()
     string fname;
     cin>>fname;
     convertToHex(fname);
-    cout<<"Check out the memory_dump_hex file!!"<<endl;
+    cout<<"Check out the "<<fname<<"_hex file!!"<<endl;
     return 0;
 }

@@ -1,0 +1,35 @@
+# test_logic_loop.asm
+#
+# Description:
+# This program tests R-type (and, or, add), I-type (addi), and branch (beq)
+# instructions by implementing a simple loop. It also tests logical operations.
+#
+# Expected Outcome:
+# 1. The program will loop 3 times (for $t0 = 0, 1, 2).
+# 2. $t0 (counter) will end with the value 3.
+# 3. $t1 (limit) will be 3.
+# 4. $s1 will hold 0xF0F0 (result of OR).
+# 5. $s2 will hold 0x0A0A (result of AND).
+# 6. The beq instruction will be taken when $t0 equals $t1, ending the loop.
+
+.text
+    addi $t0, $zero, 0      # $t0 = 0 (loop counter 'i')
+    addi $t1, $zero, 3      # $t1 = 3 (loop limit 'N')
+    addi $t2, $zero, 1      # $t2 = 1 (increment value)
+    
+    addi $s0, $zero, 0xAAAA # $s0 = 0xAAAA (for logic test)
+    addi $s1, $zero, 0xF0F0 # $s1 = 0xF0F0 (for logic test)
+
+LOOP_START:
+    beq $t0, $t1, LOOP_END  # if (i == N), exit loop
+    
+    # Loop body
+    or $s1, $s1, $t0        # Test OR: $s1 = $s1 | i
+    and $s2, $s0, $t0        # Test AND: $s2 = $s0 & i
+    
+    add $t0, $t0, $t2       # i = i + 1
+    
+    beq $zero, $zero, LOOP_START # Unconditional jump back to LOOP_START
+
+LOOP_END:
+    # End of program

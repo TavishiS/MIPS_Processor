@@ -1,0 +1,26 @@
+# test_arithmetic_memory.asm
+#
+# Description:
+# This program tests R-type (add), I-type (addi), and memory (sw, lw) instructions.
+#
+# Expected Outcome:
+# 1. $t0 will be 5, $t1 will be 10.
+# 2. $t2 will hold the sum (5 + 10 = 15).
+# 3. $s0 will hold the base memory address 100.
+# 4. The value 15 (from $t2) will be stored at memory address 100.
+# 5. The value 15 will be loaded from memory address 100 into $t3.
+# 6. Finally, $t3 should be 15.
+
+.text
+    addi $t0, $zero, 5      # $t0 = 5
+    addi $t1, $zero, 10     # $t1 = 10
+    
+    add $t2, $t0, $t1       # $t2 = $t0 + $t1 (15)
+    
+    addi $s0, $zero, 100    # $s0 = 100 (base address for memory)
+    
+    sw $t2, 0($s0)          # Store $t2 (15) at Data Memory address 100
+    
+    lw $t3, 0($s0)          # Load value from Data Memory address 100 into $t3
+
+# End of program
