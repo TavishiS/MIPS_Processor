@@ -21,6 +21,9 @@ void convertToHex(string fname)
 
     string line;
     writeFile<<"v2.0 raw"<<endl;
+    // for(int i=0; i<0x400000; i++){
+    //     writeFile<<"00000000"<<endl;
+    // }
     while(getline(readFile, line))
     {
         writeFile<<line<<endl;
